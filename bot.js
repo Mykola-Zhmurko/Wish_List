@@ -10,7 +10,7 @@ const ADMIN_ID = Number(process.env.ADMIN_ID);
 
 const bot = new Telegraf(BOT_TOKEN);
 const wishlist = JSON.parse(fs.readFileSync('wishlist.json', 'utf8'))
-bot.start((ctx) => ctx.reply('Your wish-list that you can change'));
+bot.start((ctx) => ctx.reply('Your wish-list that you can change.\nHere are commands:\n /wishlist(shows list of all gifts)\n /add(adds new gift)\n /delete(deletes gift)\n /buy(buys gift)'));
 
 bot.command('wishlist', (ctx) =>{
     const gifts = wishlist.map((gift, index) => {
@@ -44,6 +44,7 @@ bot.command('add', (ctx) =>{
     );
 });
 
+
 bot.command('delete', (ctx) =>{
     if(ctx.from.id !== ADMIN_ID){
         ctx.reply('You can not delete any gift from this wish-list')
@@ -58,6 +59,7 @@ bot.command('delete', (ctx) =>{
         );
     ctx.reply(`Gift ${deletedGift.title} successfully deleted`);
 });
+
 
 bot.command('buy', (ctx) =>{
     const giftIndex = Number(ctx.message.text.split(" ")[1]);
